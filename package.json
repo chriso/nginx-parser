@@ -1,0 +1,22 @@
+{ "name"          : "nginxparser",
+  "description"   : "Parse Nginx log files",
+  "version"       : "0.1.0",
+  "homepage"      : "http://github.com/chriso/nginx_parser",
+  "author"        : "Chris O'Hara <cohara87@gmail.com>",
+  "bugs": {
+    "mail": "cohara87@gmail.com",
+    "url": "http://github.com/chriso/nginx_parser/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/chriso/nginx_parser.git"
+  },
+  "engines": { "node": ">=0.4.0" },
+  "dependencies": {
+    "buffertools": "*"
+  },
+  "licenses": [{
+    "type": "MIT",
+    "url": "http://github.com/chriso/nginx_parser/raw/master/LICENSE"
+  }]
+}
