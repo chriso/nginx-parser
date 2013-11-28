@@ -30,3 +30,17 @@ parser.read(path, { tail: true }, function (row) {
     //...
 });
 ```
+
+To parse a line
+
+```javascript
+var NginxParser = require('nginx_parser');
+
+var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
+		+ '"$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"');
+var logLineString = 'xxx';
+parser.parseLine(loglinestring, function(row) {
+    //...
+});
+
+```
