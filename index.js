@@ -1,6 +1,11 @@
 var fs = require('fs')
-  , buffers = require('buffertools')
   , spawn = require('child_process').spawn;
+
+/**
+ * Patch the Buffer class to add methods such as concat().
+ */
+
+require('buffertools');
 
 /**
  * Create a log parser.
