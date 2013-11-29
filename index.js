@@ -43,59 +43,52 @@ var Parser = module.exports = function (format) {
 
 Parser.prototype.read = function (path, options, callback) {
     if (!path || path === '-') {
-        return this.stdin(options, callback);
+        return this.stdin(callback);
     } else if (options.tail) {
-        return this.tail(path, options, callback);
+        return this.tail(path, callback);
     }
-    return this.stream(fs.createReadStream(path), options, callback);
+    return this.stream(fs.createReadStream(path), callback);
 };
 
 /**
  * Parse a log file and watch it for changes.
  *
  * @param {String} path
- * @param {Object} options (optional)
  * @param {Function} callback
  * @api public
  */
 
-Parser.prototype.tail = function (path, options, callback) {
+Parser.prototype.tail = function (path, callback) {
     var stream = spawn('tail', [ '-F', '-c', '+0', path]).stdout;
-    return this.stream(stream, options, callback);
+    return this.stream(stream, callback);
 };
 
 /**
  * Parse a log stream from STDIN.
  *
- * @param {Object} options (optional)
  * @param {Function} callback
  * @api public
  */
 
-Parser.prototype.stdin = function (options, callback) {
-    return this.stream(process.stdin, options, callback);
+Parser.prototype.stdin = function (callback) {
+    return this.stream(process.stdin, callback);
 };
 
 /**
  * Parse a log stream.
  *
  * @param {ReadableStream} stream
- * @param {Object} options (optional)
  * @param {Function} callback
  * @api public
  */
 
-Parser.prototype.stream = function (stream, options, callback) {
-    if (typeof options === 'function') {
-        callback = options;
-        options = {};
-    }
+Parser.prototype.stream = function (stream, callback) {
     var self = this, overflow = new Buffer(0);
     stream.on('data', function (data) {
         var buffer = overflow.concat(data), newline = 0;
         for (var i = 0, len = buffer.length; i < len; i++) {
             if (buffer[i] === 10) {
-                self.parseLine(buffer.slice(newline, i), options, callback, stream);
+                self.parseLine(buffer.slice(newline, i), callback, stream);
                 newline = i + 1;
             }
         }
@@ -103,7 +96,7 @@ Parser.prototype.stream = function (stream, options, callback) {
     });
     stream.on('end', function () {
         if (overflow.length) {
-            self.parseLine(overflow, options, callback, stream);
+            self.parseLine(overflow, callback, stream);
         }
     });
     process.nextTick(function () {
@@ -115,13 +108,12 @@ Parser.prototype.stream = function (stream, options, callback) {
 /**
  * Parse a log line.
  *
- * @param {Buffer} line
- * @param {Object} options
- * @param {Object} scope (optional)
+ * @param {Buffer|String} line
+ * @param {Function} callback
  * @api private
  */
 
-Parser.prototype.parseLine = function (line, options, callback) {
+Parser.prototype.parseLine = function (line, callback) {
     var match = line.toString().match(this.parser)
 
     if (!match) return;
