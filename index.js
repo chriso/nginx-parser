@@ -1,5 +1,6 @@
 var fs = require('fs')
-  , spawn = require('child_process').spawn;
+  , spawn = require('child_process').spawn
+  , emptyStr = '';
 
 /**
  * Create a log parser.
@@ -9,24 +10,36 @@ var fs = require('fs')
  */
 
 var Parser = module.exports = function (format) {
+
     this.parser = format;
     this.directives = {};
 
-    var directive = /\$([^ ]+)(.)?/g
+
+    var directive = /(\S)?\$([\w_]+)(\S)?/g
       , match, regex, i = 1;
 
     while ((match = directive.exec(format))) {
-        this.directives[match[1]] = i++;
-        if (match[2]) {
-            match[2] = this.escape(match[2]);
-            regex = '([^' + match[2] + ']+)' + match[2];
+        this.directives[match[2]] = i++;
+        if (match[1]) {
+            match[1] = this.escape(match[1]);
         } else {
-            regex = '(.+)$';
+            match[1] = emptyStr;
+        }
+        if (match[3]) {
+            match[3] = this.escape(match[3]);
+        } else {
+            match[3] = emptyStr;
+        }
+
+        if (match[1] || match[3]) {
+            regex = match[1] + '([^' + match[1] + match[3] + ']+)' + match[3];
+        } else {
+            regex = '(.+)';
         }
         this.parser = this.parser.replace(match[0], regex);
     }
 
-    this.parser = new RegExp(this.parser);
+    this.parser = new RegExp(this.parser + '$');
 };
 
 /**
