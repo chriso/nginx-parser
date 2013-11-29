@@ -1,6 +1,6 @@
 { "name"          : "nginxparser",
   "description"   : "Parse Nginx log files",
-  "version"       : "0.1.0",
+  "version"       : "1.0.0",
   "homepage"      : "http://github.com/chriso/nginx_parser",
   "author"        : "Chris O'Hara <cohara87@gmail.com>",
   "bugs": {
