@@ -12,9 +12,6 @@
     "url": "http://github.com/chriso/nginx_parser.git"
   },
   "engines": { "node": ">=0.4.0" },
-  "dependencies": {
-    "buffertools": "*"
-  },
   "licenses": [{
     "type": "MIT",
     "url": "http://github.com/chriso/nginx_parser/raw/master/LICENSE"

@@ -1,5 +1,4 @@
 var fs = require('fs')
-  , buffers = require('buffertools')
   , spawn = require('child_process').spawn;
 
 /**
