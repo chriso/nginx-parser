@@ -5,7 +5,6 @@ var fs = require('fs')
  * Create a log parser.
  *
  * @param {String} format
- * @api public
  */
 
 var Parser = module.exports = function (format) {
@@ -38,7 +37,6 @@ var Parser = module.exports = function (format) {
  * @param {String} path
  * @param {Object} options (optional)
  * @param {Function} callback
- * @api public
  */
 
 Parser.prototype.read = function (path, options, callback) {
@@ -55,7 +53,6 @@ Parser.prototype.read = function (path, options, callback) {
  *
  * @param {String} path
  * @param {Function} callback
- * @api public
  */
 
 Parser.prototype.tail = function (path, callback) {
@@ -67,7 +64,6 @@ Parser.prototype.tail = function (path, callback) {
  * Parse a log stream from STDIN.
  *
  * @param {Function} callback
- * @api public
  */
 
 Parser.prototype.stdin = function (callback) {
@@ -79,7 +75,6 @@ Parser.prototype.stdin = function (callback) {
  *
  * @param {ReadableStream} stream
  * @param {Function} callback
- * @api public
  */
 
 Parser.prototype.stream = function (stream, callback) {
@@ -110,13 +105,13 @@ Parser.prototype.stream = function (stream, callback) {
  *
  * @param {Buffer|String} line
  * @param {Function} callback
- * @api private
  */
 
 Parser.prototype.parseLine = function (line, callback) {
-    var match = line.toString().match(this.parser)
-
-    if (!match) return;
+    var match = line.toString().match(this.parser);
+    if (!match) {
+        return;
+    }
 
     var row = {
         msec: null
@@ -167,10 +162,10 @@ Parser.prototype.parseLine = function (line, callback) {
     }
     if (row.ip_str) {
         var ip = row.ip_str.split('.', 4);
-        row.ip = Number(ip[0]) * (2 << 23)
-               + Number(ip[1]) * (2 << 15)
-               + Number(ip[2]) * (2 << 7)
-               + Number(ip[3]);
+        row.ip = Number(ip[0]) * (2 << 23) +
+            Number(ip[1]) * (2 << 15) +
+            Number(ip[2]) * (2 << 7) +
+            Number(ip[3]);
     }
 
     callback(row);
@@ -181,10 +176,8 @@ Parser.prototype.parseLine = function (line, callback) {
  *
  * @param {String} str
  * @return {String}
- * @api private
  */
 
 Parser.prototype.escape = function (str) {
     return str.replace(new RegExp('[.*+?|()\\[\\]{}]', 'g'), '\\$&');
 };
-
