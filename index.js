@@ -92,7 +92,7 @@ Parser.prototype.stream = function (stream, callback) {
         var buffer = overflow.concat(data), newline = 0;
         for (var i = 0, len = buffer.length; i < len; i++) {
             if (buffer[i] === 10) {
-                self.parseLine(buffer.slice(newline, i), callback, stream);
+                self.parseLine(buffer.slice(newline, i), callback);
                 newline = i + 1;
             }
         }
@@ -100,7 +100,7 @@ Parser.prototype.stream = function (stream, callback) {
     });
     stream.on('end', function () {
         if (overflow.length) {
-            self.parseLine(overflow, callback, stream);
+            self.parseLine(overflow, callback);
         }
     });
     process.nextTick(function () {
