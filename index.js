@@ -12,14 +12,17 @@ var Parser = module.exports = function (format) {
     this.parser = format;
     this.directives = {};
 
-    var directive = /\$([^ ]+)(.)?/g
-      , match, regex, i = 1;
+    var directive = /\$([a-z_]+)(.)?([^\$]+)?/g
+      , match, regex, boundary, i = 1;
 
     while ((match = directive.exec(format))) {
         this.directives[match[1]] = i++;
         if (match[2]) {
-            match[2] = this.escape(match[2]);
-            regex = '([^' + match[2] + ']+)' + match[2];
+            boundary = this.escape(match[2]);
+            regex = '([^' + boundary + ']+)' + boundary;
+            if (match[3]) {
+                regex += this.escape(match[3]);
+            }
         } else {
             regex = '(.+)$';
         }
