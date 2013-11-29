@@ -46,6 +46,9 @@ var Parser = module.exports = function (format) {
  */
 
 Parser.prototype.read = function (path, options, callback) {
+    if (typeof options === 'function') {
+        callback = options;
+    }
     if (!path || path === '-') {
         return this.stdin(callback);
     } else if (options.tail) {
