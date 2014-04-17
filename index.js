@@ -5,7 +5,7 @@ var fs = require('fs')
  * Patch the Buffer class to add methods such as concat().
  */
 
-require('buffertools');
+require('buffertools').extend();
 
 /**
  * Create a log parser.
