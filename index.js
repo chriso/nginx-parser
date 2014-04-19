@@ -1,11 +1,6 @@
 var fs = require('fs')
-  , spawn = require('child_process').spawn;
-
-/**
- * Patch the Buffer class to add methods such as concat().
- */
-
-require('buffertools');
+  , spawn = require('child_process').spawn
+  , buffertools = require('buffertools');
 
 /**
  * Create a log parser.
@@ -89,7 +84,7 @@ Parser.prototype.stdin = function (callback) {
 Parser.prototype.stream = function (stream, callback) {
     var self = this, overflow = new Buffer(0);
     stream.on('data', function (data) {
-        var buffer = overflow.concat(data), newline = 0;
+        var buffer = buffertools.concat(overflow, data), newline = 0;
         for (var i = 0, len = buffer.length; i < len; i++) {
             if (buffer[i] === 10) {
                 self.parseLine(buffer.slice(newline, i), callback);
