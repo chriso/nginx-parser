@@ -11,7 +11,7 @@ $ npm install nginxparser
 To read a log file
 
 ```javascript
-var NginxParser = require('nginx_parser');
+var NginxParser = require('nginxparser');
 
 var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
 		+ '"$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"');
