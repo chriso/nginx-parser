@@ -44,6 +44,9 @@ Parser.prototype.read = function (path, options, callback) {
     if (typeof options === 'function') {
         callback = options;
     }
+	if (typeof options.onEnd === 'function') {
+		this.onEnd = options.onEnd;
+	}
     if (!path || path === '-') {
         return this.stdin(callback);
     } else if (options.tail) {
@@ -94,6 +97,9 @@ Parser.prototype.stream = function (stream, callback) {
         overflow = buffer.slice(newline);
     });
     stream.on('end', function () {
+		if(self.onEnd) {
+			self.onEnd(self);
+		}
         if (overflow.length) {
             self.parseLine(overflow, callback);
         }

@@ -30,3 +30,14 @@ parser.read(path, { tail: true }, function (row) {
     //...
 });
 ```
+
+
+To use a callback after reading
+
+```javascript
+parser.read(path, { onEnd: function(parser){
+    //...
+} }, function (row) {
+    //...
+});
+```
