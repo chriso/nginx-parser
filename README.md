@@ -18,6 +18,9 @@ var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
 
 parser.read(path, function (row) {
     console.log(row);
+}, function (err) {
+    if (err) throw err;
+    console.log('Done!')
 });
 ```
 
