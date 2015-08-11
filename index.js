@@ -20,7 +20,7 @@ var Parser = module.exports = function (format) {
         this.directives[match[1]] = i++;
         if (match[2]) {
             boundary = this.escape(match[2]);
-            regex = '([^' + boundary + ']+)?' + boundary;
+            regex = '([^' + boundary + ']*)' + boundary;
             if (match[3]) {
                 regex += this.escape(match[3]);
             }
