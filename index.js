@@ -20,7 +20,7 @@ var Parser = module.exports = function (format) {
         this.directives[match[1]] = i++;
         if (match[2]) {
             boundary = this.escape(match[2]);
-            regex = '([^' + boundary + ']*)' + boundary;
+            regex = '([^' + boundary + ']+)' + boundary;
             if (match[3]) {
                 regex += this.escape(match[3]);
             }
@@ -132,7 +132,7 @@ Parser.prototype.stream = function (stream, iterator, callback) {
  */
 
 Parser.prototype.parseLine = function (line, iterator) {
-    var match = line.toString().match(this.parser);
+    var match = line.toString().replace(/\[\]/g,'[-]').match(this.parser);
     if (!match) {
         return;
     }
