@@ -9,7 +9,7 @@ var fs = require('fs')
  */
 
 var Parser = module.exports = function (format) {
-    format = format.replace('[' , '\\[')
+    format = format.replace('[' , '\[')
     this.parser = format;
     this.directives = {};
 
