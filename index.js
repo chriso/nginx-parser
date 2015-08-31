@@ -9,9 +9,14 @@ var fs = require('fs')
  */
 
 var Parser = module.exports = function (format) {
-    format = format.replace('[' , '\[')
-    this.parser = format;
     this.directives = {};
+
+    var prefix = format.match(/^[^\$]*/);
+    if (prefix) {
+        format = this.escape(prefix[0]) + format.slice(prefix[0].length);
+    }
+
+    this.parser = format;
 
     var directive = /\$([a-z_]+)(.)?([^\$]+)?/g
       , match, regex, boundary, i = 1;
