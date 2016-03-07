@@ -1,4 +1,4 @@
-**nginx_parser** parse nginx log files in node.js
+**nginx-parser** parse nginx log files in node.js
 
 ### Installation
 
