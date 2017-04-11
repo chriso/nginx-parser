@@ -51,6 +51,9 @@ Parser.prototype.read = function (path, options, iterator, callback) {
         callback = iterator;
         iterator = options;
     }
+	if (typeof options.onEnd === 'function') {
+		this.onEnd = options.onEnd;
+	}
     if (!path || path === '-') {
         return this.stdin(iterator, callback);
     } else if (options.tail) {
@@ -111,6 +114,9 @@ Parser.prototype.stream = function (stream, iterator, callback) {
         });
     }
     stream.on('end', function () {
+		if(self.onEnd) {
+			self.onEnd(self);
+		}
         if (overflow.length) {
             self.parseLine(overflow, iterator);
         }
