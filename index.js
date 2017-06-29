@@ -94,7 +94,7 @@ Parser.prototype.stdin = function (iterator, callback) {
 Parser.prototype.stream = function (stream, iterator, callback) {
     var self = this, overflow = new Buffer(0), complete = false;
     stream.on('data', function (data) {
-        var buffer = Buffer.concat(overflow, data), newline = 0;
+        var buffer = Buffer.concat([overflow, data]), newline = 0;
         for (var i = 0, len = buffer.length; i < len; i++) {
             if (buffer[i] === 10) {
                 self.parseLine(buffer.slice(newline, i), iterator);
