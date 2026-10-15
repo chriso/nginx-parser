@@ -17,7 +17,7 @@ var Parser = module.exports = function (format) {
 
     this.parser = format;
 
-    var directive = /\$([a-z_]+)(.)?([^\$]+)?/g
+    var directive = /\$([a-z0-9_]+)(.)?([^\$]+)?/g
       , match, regex, boundary, i = 1;
 
     while ((match = directive.exec(format))) {

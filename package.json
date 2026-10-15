@@ -2,6 +2,9 @@
   "name": "nginxparser",
   "description": "Parse Nginx log files",
   "version": "2.1.0",
+  "scripts": {
+    "test": "node test.js"
+  },
   "homepage": "http://github.com/chriso/nginx-parser",
   "author": "Chris O'Hara <cohara87@gmail.com>",
   "bugs": {
